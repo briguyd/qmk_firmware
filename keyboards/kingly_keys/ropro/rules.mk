@@ -29,3 +29,4 @@ AUDIO_ENABLE = no           # Audio output on port C6
 ENCODER_ENABLE = yes
 RGBLIGHT_ENABLE = yes
 LAYOUTS_HAS_RGB = yes
+TAP_DANCE_ENABLE = yes

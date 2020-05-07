@@ -57,4 +57,4 @@
 
 #define RGBLIGHT_ANIMATIONS
 
-
+#define TAPPING_TERM 175
