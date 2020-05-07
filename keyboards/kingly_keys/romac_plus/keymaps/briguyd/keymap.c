@@ -19,6 +19,25 @@
 #define _BASE 0
 #define _FN1 1
 
+const rgblight_segment_t PROGMEM base_layer_lights[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 4, RGB_WHITE}       // Light 4 LEDs, starting with LED 0
+);
+
+const rgblight_segment_t PROGMEM gaming_layer_lights[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 4, RGB_RED}       // Light 4 LEDs, starting with LED 0
+);
+
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    base_layer_lights,
+    gaming_layer_lights    // Overrides base layer
+);
+
+void keyboard_post_init_user(void) {
+    // Enable the LED layers
+    rgblight_layers = my_rgb_layers;
+}
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	[_BASE] = LAYOUT(
@@ -36,6 +55,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 };
 
+layer_state_t layer_state_set_user(layer_state_t state) {
+    // Both layers will light up if both kb layers are active
+
+    // rgblight_set_layer_state(0, layer_state_cmp(state, 0));
+    // rgblight_set_layer_state(1, layer_state_cmp(state, 1));
+   uint8_t layer = biton32(state);
+
+	  switch (layer) {
+		case _BASE:
+        rgblight_setrgb(RGB_YELLOW);
+		  break;
+		
+		case _FN1:
+		  
+        rgblight_setrgb(RGB_AZURE);
+		  break;
+		
+	  }
+
+    return state;
+}
+
+
 #ifdef OLED_DRIVER_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return OLED_ROTATION_270;  // flips the display 180 degrees if offhand
@@ -43,10 +85,11 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 
 void oled_task_user(void) {
   // Host Keyboard Layer Status
-  oled_write_P(PSTR("Live\nLaughLove\n"), false);
+  // oled_clear();
+  oled_write_P(PSTR("AliveAhahaFuck\n"), false);
   switch (get_highest_layer(layer_state)) {
     case _BASE:
-      oled_write_ln_P(PSTR(""), false);
+      oled_write_ln_P(PSTR("\n\n\n"), false);
       break;
     case _FN1:
       oled_write_ln_P(PSTR("\nRise\nUp"), false);
