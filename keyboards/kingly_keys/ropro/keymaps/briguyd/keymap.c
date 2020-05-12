@@ -177,9 +177,9 @@ uint32_t layer_state_set_user(uint32_t state) {
 void encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
         if (clockwise) {
-            tap_code(KC_WH_L);
+            tap_code16(C(S(KC_TAB)));
         } else {
-            tap_code(KC_WH_R);
+            tap_code16(C(KC_TAB));
         }
     }
 }

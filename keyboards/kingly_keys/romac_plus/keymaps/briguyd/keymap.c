@@ -66,17 +66,26 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 		case _BASE:
         rgblight_setrgb(RGB_YELLOW);
 		  break;
-		
+
 		case _FN1:
-		  
+
         rgblight_setrgb(RGB_AZURE);
 		  break;
-		
+
 	  }
 
     return state;
 }
 
+void encoder_update_user(uint8_t index, bool clockwise) {
+    if (index == 0) {
+        if (clockwise) {
+            tap_code(KC_F10);
+        } else {
+            tap_code(KC_F5);
+        }
+    }
+}
 
 #ifdef OLED_DRIVER_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
@@ -100,9 +109,9 @@ void oled_task_user(void) {
   }
 
   // Host Keyboard LED Status
-  // uint8_t led_usb_state = host_keyboard_leds();
-  // oled_write_P(IS_LED_ON(led_usb_state, USB_LED_NUM_LOCK) ? PSTR("NLCK ") : PSTR("     "), false);
-  // oled_write_P(IS_LED_ON(led_usb_state, USB_LED_CAPS_LOCK) ? PSTR("CAPS ") : PSTR("       "), false);
-  // oled_write_P(IS_LED_ON(led_usb_state, USB_LED_SCROLL_LOCK) ? PSTR("SCRLK") : PSTR("       "), false);
+//   uint8_t led_usb_state = host_keyboard_leds();
+//   oled_write_P(IS_LED_ON(led_usb_state, USB_LED_NUM_LOCK) ? PSTR("NLCK ") : PSTR("     "), false);
+//   oled_write_P(IS_LED_ON(led_usb_state, USB_LED_CAPS_LOCK) ? PSTR("CAPS ") : PSTR("       "), false);
+//   oled_write_P(IS_LED_ON(led_usb_state, USB_LED_SCROLL_LOCK) ? PSTR("SCRLK") : PSTR("       "), false);
 }
 #endif
